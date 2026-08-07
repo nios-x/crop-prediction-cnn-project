@@ -129,6 +129,36 @@ If you'd like, I can also:
 - Add automated tests and a CI workflow for linting/building.
 
 Tell me which of these you'd like next.
+
+**Notebook: Untitled.ipynb**
+
+- **File**: [notebooks/Untitled.ipynb](notebooks/Untitled.ipynb)
+- **Purpose**: Notebook for exploring the model pipeline, running experiments, and documenting the workflow for the main project described below.
+- **Contents**: 18 Python code cells (none executed at time of summary). Cells cover data loading, preprocessing, model training/fine-tuning, evaluation, inference examples, and utility helpers; some cells include stdout/stderr outputs saved in the notebook metadata.
+- **How To Run**: Open the notebook in VS Code or Jupyter, ensure the Python environment has required packages (TensorFlow/onnxruntime, numpy, pandas, matplotlib, etc.), then run cells in order from top to bottom.
+
+**PROBLEM STATEMENT 1**
+
+- **Type**: Deep Learning + Web App
+- **Title**: Build a crop disease detection web app for farmers
+- **Description**: Farmers often notice a diseased leaf too late, after the infection has already spread. Build a simple web app where a user uploads a photo of a leaf, and a trained model predicts which disease it likely has, along with a basic remedy tip.
+
+- **Suggested Scope**:
+	- **Image Classification**: Train a small CNN, or fine-tune a ready-made model (MobileNet/ResNet), on a public leaf-disease dataset (PlantVillage) to classify 3–5 common diseases.
+	- **Web Upload Page**: A basic web page/form where a user uploads an image and the backend returns the predicted disease with a confidence score.
+	- **Remedy Lookup**: Store a simple text tip for each disease class (for example, in a JSON file) and display it alongside the prediction.
+	- **History Page**: Show a simple list of a user's past uploads and predictions.
+
+- **Optional Add-ons**:
+	- Show top-3 predictions instead of just one, in case the model is unsure.
+	- Multilingual remedy text.
+
+**Notebook Notes**
+
+- The notebook documents the end-to-end experiment flow used while developing this project: dataset loading, augmentation, model architecture/transfer-learning, training loops or fit calls, evaluation metrics, and example inference runs using sample images from `public/test-images/`.
+- Store remedy tips and label metadata in [lib/diseaseData.ts](lib/diseaseData.ts) or a JSON file for easy lookup by the web UI.
+
+---
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
