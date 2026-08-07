@@ -2,6 +2,9 @@
 
 A next-generation, browser-based crop disease detection demo built with Next.js and client/server ML model support. This repository provides a user interface for uploading plant images, running inference with local model files (ONNX / TensorFlow), and an AI review pipeline for quick feedback.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/f8f326cb-cff1-406a-a43c-549f5c441c61" />
+
+
 ## Key Features
 
 - Web UI for uploading and previewing plant images.
