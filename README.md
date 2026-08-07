@@ -1,4 +1,4 @@
-# Crop Disease Detector
+# <div align="center">Crop Disease Detector</div>
 
 A next-generation, browser-based crop disease detection demo built with Next.js and client/server ML model support. This repository provides a user interface for uploading plant images, running inference with local model files (ONNX / TensorFlow), and an AI review pipeline for quick feedback.
 
