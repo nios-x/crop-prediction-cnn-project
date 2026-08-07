@@ -33,12 +33,16 @@ A next-generation, browser-based crop disease detection demo built with Next.js 
 | Dense(num_classes) | Produces class probabilities |
 | Softmax | Converts outputs into probabilities for each class |
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5a9d40a0-b7e8-4045-a60d-c954fc051b1d" />
+
+
 ## Tech Stack
 
 - Next.js (App Router)
 - React + TypeScript
 - ONNX / TensorFlow CNN model files (placed in `public/`)
 - Small backend routes under the `app/api/` folder for server-side processing
+
 
 ## Repository Structure
 
@@ -109,6 +113,9 @@ Notes on model inference
 ## API
 
 - The AI review API is implemented at [app/api/ai-review/route.ts](app/api/ai-review/route.ts). It accepts an image payload and returns a structured review. Use this API for centralized or heavier analysis workloads.
+## Export 
+<img width="653" height="845" alt="image" src="https://github.com/user-attachments/assets/33d98415-79dd-42e1-bdc3-7757d1aed9f5" />
+
 
 ## Editing / Extending
 
