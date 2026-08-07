@@ -1,4 +1,4 @@
-# Crop Disease Detector
+# <div align="center">Crop Disease Detector</div>
 
 A next-generation, browser-based crop disease detection demo built with Next.js and client/server ML model support. This repository provides a user interface for uploading plant images, running inference with local model files (ONNX / TensorFlow), and an AI review pipeline for quick feedback.
 
@@ -13,12 +13,36 @@ A next-generation, browser-based crop disease detection demo built with Next.js 
 - Example datasets and test images under `public/test-images/` for quick experimentation.
 - Modular React components in `components/` and `ui/` for easy customization.
 
+## CNN Feature Extraction
+
+| Layer | Features learned/extracted |
+|---|---|
+| Data Augmentation | Variations in rotation, zoom, flip, etc. |
+| Conv2D(32) | Edges, lines, corners, color transitions |
+| BatchNormalization | Normalized/stable feature representations |
+| MaxPooling2D | Strongest local features, reduced spatial size |
+| Conv2D(64) | Textures, curves, leaf veins, small spots, patterns |
+| BatchNormalization | Stable intermediate representations |
+| MaxPooling2D | Important features with reduced dimensions |
+| Conv2D(128) | Complex shapes, lesions, discoloration, disease patterns |
+| BatchNormalization | Stable high-level representations |
+| MaxPooling2D | Most important high-level features |
+| GlobalAveragePooling2D | Converts feature maps into a compact feature vector |
+| Dense(128) | Combines features to distinguish disease patterns |
+| Dropout(0.5) | Prevents over-reliance on specific features |
+| Dense(num_classes) | Produces class probabilities |
+| Softmax | Converts outputs into probabilities for each class |
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5a9d40a0-b7e8-4045-a60d-c954fc051b1d" />
+
+
 ## Tech Stack
 
 - Next.js (App Router)
 - React + TypeScript
-- ONNX / TensorFlow model files (placed in `public/`)
+- ONNX / TensorFlow CNN model files (placed in `public/`)
 - Small backend routes under the `app/api/` folder for server-side processing
+
 
 ## Repository Structure
 
@@ -89,6 +113,9 @@ Notes on model inference
 ## API
 
 - The AI review API is implemented at [app/api/ai-review/route.ts](app/api/ai-review/route.ts). It accepts an image payload and returns a structured review. Use this API for centralized or heavier analysis workloads.
+## Export 
+<img width="653" height="845" alt="image" src="https://github.com/user-attachments/assets/33d98415-79dd-42e1-bdc3-7757d1aed9f5" />
+
 
 ## Editing / Extending
 
