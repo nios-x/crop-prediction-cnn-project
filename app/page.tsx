@@ -196,6 +196,10 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setTheme("light");
+  }, [theme]);
   const classNames =
     cropType === "potato"
       ? POTATO_CLASSES
@@ -707,7 +711,10 @@ export default function Home() {
                 {/* Input area */}
                 <Card className="overflow-hidden">
                   <CardContent className="p-0">
-                    <div className={`relative aspect-video w-full overflow-hidden bg-black ${mode === "camera" ? "block" : "hidden"}`}>
+                    <div
+                      className={`relative aspect-video w-full overflow-hidden bg-black ${mode === "camera" ? "block" : "hidden"}`}
+                      suppressHydrationWarning
+                    >
                       <video
                         ref={videoRef}
                         autoPlay
@@ -715,6 +722,7 @@ export default function Home() {
                         muted
                         preload="auto"
                         className="h-full w-full object-cover"
+                        suppressHydrationWarning
                       />
                       {/* Camera viewfinder corners */}
                       {isCameraActive && (
