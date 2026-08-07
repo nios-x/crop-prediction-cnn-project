@@ -13,6 +13,9 @@ A next-generation, browser-based crop disease detection demo built with Next.js 
 - Example datasets and test images under `public/test-images/` for quick experimentation.
 - Modular React components in `components/` and `ui/` for easy customization.
 
+<img width="1080" height="2408" alt="Screenshot_20260808_030514_Chrome" src="https://github.com/user-attachments/assets/a14ba73f-0e3b-4032-864f-a2b89c748581" />
+![Screenshot_20260808_030426_Chrome](https://github.com/user-attachments/assets/a2a83a1c-ecd2-4d5a-b6b4-cbc0672f0cd7)
+
 ## CNN Feature Extraction
 
 | Layer | Features learned/extracted |
