@@ -17,7 +17,7 @@ A next-generation, browser-based crop disease detection demo built with Next.js 
 
 - Next.js (App Router)
 - React + TypeScript
-- ONNX / TensorFlow model files (placed in `public/`)
+- ONNX / TensorFlow CNN model files (placed in `public/`)
 - Small backend routes under the `app/api/` folder for server-side processing
 
 ## Repository Structure
