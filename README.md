@@ -13,6 +13,26 @@ A next-generation, browser-based crop disease detection demo built with Next.js 
 - Example datasets and test images under `public/test-images/` for quick experimentation.
 - Modular React components in `components/` and `ui/` for easy customization.
 
+## CNN Feature Extraction
+
+| Layer | Features learned/extracted |
+|---|---|
+| Data Augmentation | Variations in rotation, zoom, flip, etc. |
+| Conv2D(32) | Edges, lines, corners, color transitions |
+| BatchNormalization | Normalized/stable feature representations |
+| MaxPooling2D | Strongest local features, reduced spatial size |
+| Conv2D(64) | Textures, curves, leaf veins, small spots, patterns |
+| BatchNormalization | Stable intermediate representations |
+| MaxPooling2D | Important features with reduced dimensions |
+| Conv2D(128) | Complex shapes, lesions, discoloration, disease patterns |
+| BatchNormalization | Stable high-level representations |
+| MaxPooling2D | Most important high-level features |
+| GlobalAveragePooling2D | Converts feature maps into a compact feature vector |
+| Dense(128) | Combines features to distinguish disease patterns |
+| Dropout(0.5) | Prevents over-reliance on specific features |
+| Dense(num_classes) | Produces class probabilities |
+| Softmax | Converts outputs into probabilities for each class |
+
 ## Tech Stack
 
 - Next.js (App Router)
