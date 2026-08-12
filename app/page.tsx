@@ -79,11 +79,23 @@ import {
   POTATO_CLASSES,
   TOMATO_CLASSES,
   PEPPER_BELL_CLASSES,
+  ONION_CLASSES,
+  CARROT_CLASSES,
+  CABBAGE_CLASSES,
+  CAULIFLOWER_CLASSES,
+  BRINJAL_CLASSES,
+  CORN_CLASSES,
+  APPLE_CLASSES,
+  GRAPE_CLASSES,
+  STRAWBERRY_CLASSES,
   DISEASE_DB,
   getSeverityBg,
   type CropType,
   type PredictionResult,
   type HistoryEntry,
+  CROP_NAME_HINDI,
+  CROP_NAME_ENGLISH,
+  CROP_EMOJI,
 } from "@/lib/diseaseData";
 
 if (typeof window !== "undefined") {
@@ -93,16 +105,18 @@ if (typeof window !== "undefined") {
 
 const SAMPLE_IMAGES: Record<
   CropType,
-  { label: string; url: string; filename: string }[]
+  { label: string; labelHi: string; url: string; filename: string }[]
 > = {
   potato: [
     {
       label: "Early Blight",
+      labelHi: "अगेती झुलसा",
       url: "/test-images/potato/00d8f10f-5038-4e0f-bb58-0b885ddc0cc5___RS_Early.B 8722.JPG",
       filename: "potato_early_blight.jpg",
     },
     {
       label: "Healthy Potato",
+      labelHi: "स्वस्थ आलू",
       url: "/test-images/potato/0b3e5032-8ae8-49ac-8157-a1cac3df01dd___RS_HL 1817.JPG",
       filename: "potato_healthy.jpg",
     },
@@ -110,11 +124,13 @@ const SAMPLE_IMAGES: Record<
   tomato: [
     {
       label: "Bacterial Spot",
+      labelHi: "बैक्टीरियल स्पॉट",
       url: "/test-images/tomato/00a7c269-3476-4d25-b744-44d6353cd921___GCREC_Bact.Sp 5807.JPG",
       filename: "tomato_bacterial_spot.jpg",
     },
     {
       label: "Healthy Tomato",
+      labelHi: "स्वस्थ टमाटर",
       url: "/test-images/tomato/0cb10f98-491d-4e1f-b8ea-4fb0f1b3675f___GH_HL Leaf 333.JPG",
       filename: "tomato_healthy.jpg",
     },
@@ -122,13 +138,141 @@ const SAMPLE_IMAGES: Record<
   pepper_bell: [
     {
       label: "Bacterial Spot",
+      labelHi: "बैक्टीरियल स्पॉट",
       url: "/test-images/pepper/01ebc916-4793-40a3-b5e4-a32687e4fa3d___NREC_B.Spot 9125.JPG",
       filename: "pepper_bacterial_spot.jpg",
     },
     {
       label: "Healthy Pepper",
+      labelHi: "स्वस्थ शिमला मिर्च",
       url: "/test-images/pepper/1a1a389d-f186-4481-8a5c-b8c6f864ad7f___JR_HL 8649.JPG",
       filename: "pepper_healthy.jpg",
+    },
+  ],
+  onion: [
+    {
+      label: "Purple Blotch",
+      labelHi: "पर्पल ब्लॉच",
+      url: "/test-images/onion/onion_purple_blotch.jpg",
+      filename: "onion_purple_blotch.jpg",
+    },
+    {
+      label: "Healthy Onion",
+      labelHi: "स्वस्थ प्याज",
+      url: "/test-images/onion/onion_healthy.jpg",
+      filename: "onion_healthy.jpg",
+    },
+  ],
+  carrot: [
+    {
+      label: "Leaf Blight",
+      labelHi: "पत्ती झुलसा",
+      url: "/test-images/carrot/carrot_leaf_blight.jpg",
+      filename: "carrot_leaf_blight.jpg",
+    },
+    {
+      label: "Healthy Carrot",
+      labelHi: "स्वस्थ गाजर",
+      url: "/test-images/carrot/carrot_healthy.jpg",
+      filename: "carrot_healthy.jpg",
+    },
+  ],
+  cabbage: [
+    {
+      label: "Black Rot",
+      labelHi: "काली सड़न",
+      url: "/test-images/cabbage/cabbage_black_rot.jpg",
+      filename: "cabbage_black_rot.jpg",
+    },
+    {
+      label: "Healthy Cabbage",
+      labelHi: "स्वस्थ पत्तागोभी",
+      url: "/test-images/cabbage/cabbage_healthy.jpg",
+      filename: "cabbage_healthy.jpg",
+    },
+  ],
+  cauliflower: [
+    {
+      label: "Soft Rot",
+      labelHi: "नरम सड़न",
+      url: "/test-images/cauliflower/cauliflower_soft_rot.jpg",
+      filename: "cauliflower_soft_rot.jpg",
+    },
+    {
+      label: "Healthy Cauliflower",
+      labelHi: "स्वस्थ फूलगोभी",
+      url: "/test-images/cauliflower/cauliflower_healthy.jpg",
+      filename: "cauliflower_healthy.jpg",
+    },
+  ],
+  brinjal: [
+    {
+      label: "Phomopsis Blight",
+      labelHi: "फोमोप्सिस झुलसा",
+      url: "/test-images/brinjal/brinjal_phomopsis_blight.jpg",
+      filename: "brinjal_phomopsis_blight.jpg",
+    },
+    {
+      label: "Healthy Brinjal",
+      labelHi: "स्वस्थ बैंगन",
+      url: "/test-images/brinjal/brinjal_healthy.jpg",
+      filename: "brinjal_healthy.jpg",
+    },
+  ],
+  corn: [
+    {
+      label: "Common Rust",
+      labelHi: "सामान्य गेरुई",
+      url: "/test-images/corn/corn_common_rust.jpg",
+      filename: "corn_common_rust.jpg",
+    },
+    {
+      label: "Healthy Corn",
+      labelHi: "स्वस्थ मक्का",
+      url: "/test-images/corn/corn_healthy.jpg",
+      filename: "corn_healthy.jpg",
+    },
+  ],
+  apple: [
+    {
+      label: "Apple Scab",
+      labelHi: "एप्पल स्कैब",
+      url: "/test-images/apple/apple_scab.jpg",
+      filename: "apple_scab.jpg",
+    },
+    {
+      label: "Healthy Apple",
+      labelHi: "स्वस्थ सेब",
+      url: "/test-images/apple/apple_healthy.jpg",
+      filename: "apple_healthy.jpg",
+    },
+  ],
+  grape: [
+    {
+      label: "Black Rot",
+      labelHi: "काली सड़न",
+      url: "/test-images/grape/grape_black_rot.jpg",
+      filename: "grape_black_rot.jpg",
+    },
+    {
+      label: "Healthy Grape",
+      labelHi: "स्वस्थ अंगूर",
+      url: "/test-images/grape/grape_healthy.jpg",
+      filename: "grape_healthy.jpg",
+    },
+  ],
+  strawberry: [
+    {
+      label: "Leaf Scorch",
+      labelHi: "पत्ती झुलसा",
+      url: "/test-images/strawberry/strawberry_leaf_scorch.jpg",
+      filename: "strawberry_leaf_scorch.jpg",
+    },
+    {
+      label: "Healthy Strawberry",
+      labelHi: "स्वस्थ स्ट्रॉबेरी",
+      url: "/test-images/strawberry/strawberry_healthy.jpg",
+      filename: "strawberry_healthy.jpg",
     },
   ],
 };
@@ -165,6 +309,7 @@ function getTopN(
         displayName: key.replace(/_/g, " "),
         severity: "medium" as const,
         description: "Unknown disease.",
+        descriptionHi: "अज्ञात रोग।",
         remedies: {
           en: ["Consult a local agronomist."],
           hi: ["स्थानीय कृषि विशेषज्ञ से सलाह लें।"],
@@ -201,11 +346,18 @@ export default function Home() {
     setTheme("light");
   }, [theme]);
   const classNames =
-    cropType === "potato"
-      ? POTATO_CLASSES
-      : cropType === "tomato"
-        ? TOMATO_CLASSES
-        : PEPPER_BELL_CLASSES;
+    cropType === "potato" ? POTATO_CLASSES
+    : cropType === "tomato" ? TOMATO_CLASSES
+    : cropType === "pepper_bell" ? PEPPER_BELL_CLASSES
+    : cropType === "onion" ? ONION_CLASSES
+    : cropType === "carrot" ? CARROT_CLASSES
+    : cropType === "cabbage" ? CABBAGE_CLASSES
+    : cropType === "cauliflower" ? CAULIFLOWER_CLASSES
+    : cropType === "brinjal" ? BRINJAL_CLASSES
+    : cropType === "corn" ? CORN_CLASSES
+    : cropType === "apple" ? APPLE_CLASSES
+    : cropType === "grape" ? GRAPE_CLASSES
+    : STRAWBERRY_CLASSES;
 
   useEffect(() => {
     let cancelled = false;
@@ -214,24 +366,28 @@ export default function Home() {
       setSession(null);
       setPredictions([]);
       try {
-        const modelPath =
-          cropType === "potato"
-            ? "/Potato.onnx"
-            : cropType === "tomato"
-              ? "/Tomato.onnx"
-              : "/Pepper_Bell.onnx";
+        const MODEL_PATHS: Record<string, string> = {
+          potato: "/Potato.onnx",
+          tomato: "/Tomato.onnx",
+          pepper_bell: "/Pepper_Bell.onnx",
+          onion: "/Onion.onnx",
+          carrot: "/Carrot.onnx",
+          cabbage: "/Cabbage.onnx",
+          cauliflower: "/Cauliflower.onnx",
+          brinjal: "/Brinjal.onnx",
+          corn: "/Corn.onnx",
+          apple: "/Apple.onnx",
+          grape: "/Grape.onnx",
+          strawberry: "/Strawberry.onnx",
+        };
+        const modelPath = MODEL_PATHS[cropType] || "/Potato.onnx";
         const model = await ort.InferenceSession.create(modelPath, {
           executionProviders: ["wasm"],
         });
         if (cancelled) return;
         setSession(model);
         setModelStatus("ready");
-        const cropName =
-          cropType === "potato"
-            ? "Potato"
-            : cropType === "tomato"
-              ? "Tomato"
-              : "Pepper Bell";
+        const cropName = language === "hi" ? CROP_NAME_HINDI[cropType] : CROP_NAME_ENGLISH[cropType];
         toast.success(`${cropName} model loaded successfully`, {
           style: {
             background: "black",
@@ -351,8 +507,10 @@ export default function Home() {
       };
       saveHistory([entry, ...history]);
 
+      const dispName = language === "hi" && top3[0].info.displayNameHi ? top3[0].info.displayNameHi : top3[0].displayName;
+
       toast.success(
-        `Detected: ${top3[0].displayName} (${(top3[0].confidence * 100).toFixed(1)}%)`, {
+        `Detected: ${dispName} (${(top3[0].confidence * 100).toFixed(1)}%)`, {
         style: {
           background: "black",
           color: "white",
@@ -575,50 +733,61 @@ export default function Home() {
               speed={0.05}
             >
               <div className="flex flex-col items-center text-center">
-                <Badge
-                  variant="default"
-                  className="mb-4 border-primary/10 bg-gradient-to-r from-lime-500 to-green-500 font-semibold text-white"
-                >
-                  <IconLeaf className="mr-1 h-3 w-3" />
-                  AI-Powered Detection
-                </Badge>
+                <div className="flex items-center gap-2 mb-4">
+                  <Badge
+                    variant="default"
+                    className="border-primary/10 bg-gradient-to-r from-lime-500 to-green-500 font-semibold text-white"
+                  >
+                    <IconLeaf className="mr-1 h-3 w-3" />
+                    {language === "hi" ? "AI-संचालित पत्ती रोग पहचान" : "AI-Powered Detection"}
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 gap-1.5 rounded-full border-white/20 bg-white/10 px-3 text-xs font-semibold text-white backdrop-blur hover:bg-white/20 transition-all"
+                    onClick={() => setLanguage(language === "en" ? "hi" : "en")}
+                  >
+                    <IconLanguage className="h-3.5 w-3.5" />
+                    {language === "en" ? "हिंदी" : "English"}
+                  </Button>
+                </div>
 
                 <div className="flex flex-wrap  items-center justify-center gap-x-3 gap-y-2">
                   <LayoutTextFlip
                     text="CropGuard"
-                    words={[
-                      "Early Blight",
-                      "Late Blight",
-                      "Leaf Mold",
-                      "Bacterial Spot",
-                      "Healthy Leaf",
-                    ]}
+                    words={language === "hi" ? ["अगेती झुलसा", "पछेती झुलसा", "पत्ती फफूंद", "बैक्टीरियल स्पॉट", "स्वस्थ पत्ती"] : ["Early Blight", "Late Blight", "Leaf Mold", "Bacterial Spot", "Healthy Leaf"]}
                     duration={2500}
                   />
                 </div>
 
                 <p className="mt-5 max-w-2xl text-sm text-muted-foreground sm:text-base">
-                  Upload a photo of leaf and get instant
-                  disease diagnosis with{" "}
-                  <strong>top-3 predictions</strong>, confidence scores,
-                  and <strong>multilingual remedy tips</strong>.
+                  {language === "hi" ? (
+                    <>
+                      पत्ती की फोटो अपलोड करें और तुरंत रोग का निदान प्राप्त करें जिसमें <strong>शीर्ष-3 अनुमान</strong>, सटीकता स्कोर, और <strong>बहुभाषी उपचार सुझाव</strong> शामिल हैं।
+                    </>
+                  ) : (
+                    <>
+                      Upload a photo of leaf and get instant disease diagnosis with{" "}
+                      <strong>top-3 predictions</strong>, confidence scores, and <strong>multilingual remedy tips</strong>.
+                    </>
+                  )}
                 </p>
 
                 {/* Model status */}
                 <div className="mt-6">
                   {modelStatus === "loading" && (
                     <Badge variant="secondary" className="animate-pulse">
-                      ⏳ Loading {cropType} model…
+                      {language === "hi" ? `⏳ ${CROP_NAME_HINDI[cropType]} मॉडल लोड हो रहा है…` : `⏳ Loading ${cropType} model…`}
                     </Badge>
                   )}
                   {modelStatus === "ready" && (
                     <Badge className="border border-emerald-500/30 bg-emerald-500/15 text-emerald-600">
-                      Powered by a Convolutional Neural Network
+                      {language === "hi" ? "कन्वोल्यूशनल न्यूरल नेटवर्क द्वारा संचालित" : "Powered by a Convolutional Neural Network"}
                     </Badge>
                   )}
                   {modelStatus === "error" && (
                     <Badge variant="destructive">
-                      ✕ Model failed to load
+                      {language === "hi" ? "✕ मॉडल लोड नहीं हो सका" : "✕ Model failed to load"}
                     </Badge>
                   )}
                 </div>
@@ -632,40 +801,26 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
               <div>
                 <h2 className="text-xl font-bold sm:text-2xl">
-                  Select Crop Type
+                  {language === "hi" ? "फसल का प्रकार चुनें" : "Select Crop Type"}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Choose the crop to load the correct AI model
+                  {language === "hi" ? "सही AI मॉडल लोड करने के लिए फसल चुनें" : "Choose the crop to load the correct AI model"}
                 </p>
               </div>
-              <div className="flex items-center gap-1 rounded-full border border-border bg-muted/50 p-1">
-                <button
-                  onClick={() => handleCropSwitch("potato")}
-                  className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${cropType === "potato"
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
-                    : "text-muted-foreground hover:text-foreground"
+              <div className="flex flex-wrap items-center gap-1.5 rounded-2xl border border-border bg-muted/50 p-1.5">
+                {(["potato", "tomato", "pepper_bell", "onion", "carrot", "cabbage", "cauliflower", "brinjal", "corn", "apple", "grape", "strawberry"] as CropType[]).map((crop) => (
+                  <button
+                    key={crop}
+                    onClick={() => handleCropSwitch(crop)}
+                    className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+                      cropType === crop
+                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
-                >
-                  🥔 Potato
-                </button>
-                <button
-                  onClick={() => handleCropSwitch("tomato")}
-                  className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${cropType === "tomato"
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
-                    : "text-muted-foreground hover:text-foreground"
-                    }`}
-                >
-                  🍅 Tomato
-                </button>
-                <button
-                  onClick={() => handleCropSwitch("pepper_bell")}
-                  className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${cropType === "pepper_bell"
-                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/25"
-                    : "text-muted-foreground hover:text-foreground"
-                    }`}
-                >
-                  🫑 Pepper Bell
-                </button>
+                  >
+                    {CROP_EMOJI[crop]} {language === "hi" ? CROP_NAME_HINDI[crop] : CROP_NAME_ENGLISH[crop]}
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -686,7 +841,7 @@ export default function Home() {
                     }}
                   >
                     <IconUpload className="mr-2 h-4 w-4 text-sm" />
-                    Upload Image
+                    {language === "hi" ? "चित्र अपलोड करें" : "Upload Image"}
                   </Button>
                   <StatefulButton
                     className={`flex-1  flex items-center ${mode === "camera" && isCameraActive ? "!bg-red-500 hover:!ring-red-500 " : ""}`}
@@ -696,13 +851,11 @@ export default function Home() {
                   >
                     {isCameraActive ? (
                       <div className="flex items-center">
-                        <IconCameraOff className="mr-2 h-4 w-4 text-sm" /> Stop
-                        Camera
+                        <IconCameraOff className="mr-2 h-4 w-4 text-sm" /> {language === "hi" ? "कैमरा बंद करें" : "Stop Camera"}
                       </div>
                     ) : (
                       <div className="flex items-center">
-                        <IconCamera className="mr-2 h-4 w-4 text-[10px]" /> Live
-                        Camera
+                        <IconCamera className="mr-2 h-4 w-4 text-[10px]" /> {language === "hi" ? "लाइव कैमरा" : "Live Camera"}
                       </div>
                     )}
                   </StatefulButton>
@@ -737,7 +890,7 @@ export default function Home() {
                       {isCameraActive && (
                         <div className="absolute top-3 left-3">
                           <Badge className="animate-live-pulse border-red-500 bg-red-500 text-white">
-                            ● LIVE
+                            {language === "hi" ? "● लाइव" : "● LIVE"}
                           </Badge>
                         </div>
                       )}
@@ -762,7 +915,7 @@ export default function Home() {
                                     } animate-pulse`}
                                 />
                                 <span className="text-sm font-semibold text-white tracking-wide">
-                                  {predictions[0].displayName}
+                                  {language === "hi" && predictions[0].info.displayNameHi ? predictions[0].info.displayNameHi : predictions[0].displayName}
                                 </span>
                               </div>
                               <Badge
@@ -816,7 +969,7 @@ export default function Home() {
                                       } animate-pulse`}
                                   />
                                   <span className="text-sm font-semibold text-white tracking-wide">
-                                    {predictions[0].displayName}
+                                    {language === "hi" && predictions[0].info.displayNameHi ? predictions[0].info.displayNameHi : predictions[0].displayName}
                                   </span>
                                 </div>
                                 <Badge
@@ -841,10 +994,10 @@ export default function Home() {
                                 </div>
                                 <div className="text-center">
                                   <p className="text-sm font-bold text-white tracking-wide">
-                                    Analyzing Leaf...
+                                    {language === "hi" ? "पत्ती का विश्लेषण हो रहा है..." : "Analyzing Leaf..."}
                                   </p>
                                   <p className="text-[11px] text-emerald-300/80 font-medium">
-                                    Running CNN Model Inference
+                                    {language === "hi" ? "CNN मॉडल इन्फेरेंस चल रहा है" : "Running CNN Model Inference"}
                                   </p>
                                 </div>
                               </div>
@@ -869,7 +1022,7 @@ export default function Home() {
                   }}
                 >
                   <IconX className="mr-1 h-3 w-3" />
-                  Upload Another
+                  {language === "hi" ? "दूसरा चित्र अपलोड करें" : "Upload Another"}
                 </Button>
 
                 {/* Quick Summary Card */}
@@ -883,29 +1036,29 @@ export default function Home() {
                       <CardContent className="p-4 space-y-3">
                         <div className="flex items-center gap-2">
                           <IconChartBar className="h-4 w-4 text-primary" />
-                          <h4 className="text-sm font-semibold">Quick Summary</h4>
+                          <h4 className="text-sm font-semibold">{language === "hi" ? "त्वरित सारांश" : "Quick Summary"}</h4>
                         </div>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
-                            <span className="text-xs text-muted-foreground">Top Prediction</span>
-                            <span className="text-xs font-semibold text-foreground">{predictions[0].displayName}</span>
+                            <span className="text-xs text-muted-foreground">{language === "hi" ? "शीर्ष अनुमान" : "Top Prediction"}</span>
+                            <span className="text-xs font-semibold text-foreground">{language === "hi" && predictions[0].info.displayNameHi ? predictions[0].info.displayNameHi : predictions[0].displayName}</span>
                           </div>
                           <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
-                            <span className="text-xs text-muted-foreground">Confidence</span>
+                            <span className="text-xs text-muted-foreground">{language === "hi" ? "सटीकता" : "Confidence"}</span>
                             <span className={`text-xs font-bold ${predictions[0].confidence >= 0.8 ? "text-emerald-500" : predictions[0].confidence >= 0.5 ? "text-yellow-500" : "text-red-500"}`}>
                               {(predictions[0].confidence * 100).toFixed(1)}%
                             </span>
                           </div>
                           <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
-                            <span className="text-xs text-muted-foreground">Severity</span>
+                            <span className="text-xs text-muted-foreground">{language === "hi" ? "गंभीरता" : "Severity"}</span>
                             <Badge variant="outline" className={getSeverityBg(predictions[0].info.severity)}>
-                              {predictions[0].info.severity === "none" ? "Healthy" : predictions[0].info.severity.toUpperCase()}
+                              {predictions[0].info.severity === "none" ? (language === "hi" ? "स्वस्थ" : "Healthy") : predictions[0].info.severity.toUpperCase()}
                             </Badge>
                           </div>
                           <div className="flex items-center justify-between rounded-lg bg-muted/50 px-3 py-2">
-                            <span className="text-xs text-muted-foreground">Crop Model</span>
+                            <span className="text-xs text-muted-foreground">{language === "hi" ? "फसल मॉडल" : "Crop Model"}</span>
                             <span className="text-xs font-medium text-foreground">
-                              {cropType === "potato" ? "🥔 Potato" : cropType === "tomato" ? "🍅 Tomato" : "🫑 Pepper Bell"}
+                              {CROP_EMOJI[cropType]} {language === "hi" ? CROP_NAME_HINDI[cropType] : CROP_NAME_ENGLISH[cropType]}
                             </span>
                           </div>
                         </div>
@@ -924,42 +1077,42 @@ export default function Home() {
                     <CardContent className="p-4 space-y-3">
                       <div className="flex items-center gap-2">
                         <IconPlant className="h-4 w-4 text-emerald-500" />
-                        <h4 className="text-sm font-semibold">Crop Care Best Practices</h4>
+                        <h4 className="text-sm font-semibold">{language === "hi" ? "फसल देखभाल - सर्वोत्तम उपाय" : "Crop Care Best Practices"}</h4>
                       </div>
                       <div className="space-y-2">
                         <div className="flex items-start gap-2.5 rounded-lg bg-muted/40 p-2.5 transition-colors hover:bg-muted/60">
                           <IconDroplet className="mt-0.5 h-4 w-4 shrink-0 text-cyan-500" />
                           <div>
-                            <p className="text-xs font-semibold text-foreground">Soil-Level Watering</p>
+                            <p className="text-xs font-semibold text-foreground">{language === "hi" ? "जड़ स्तर पर सिंचाई" : "Soil-Level Watering"}</p>
                             <p className="text-[11px] text-muted-foreground leading-relaxed">
-                              Always irrigate at the roots. Wet foliage accelerates fungal spore germination and blight.
+                              {language === "hi" ? "हमेशा जड़ों में पानी दें। पत्तियों के गीले होने से फफूंद और झुलसा रोग तेजी से फैलते हैं।" : "Always irrigate at the roots. Wet foliage accelerates fungal spore germination and blight."}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2.5 rounded-lg bg-muted/40 p-2.5 transition-colors hover:bg-muted/60">
                           <IconSunHigh className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
                           <div>
-                            <p className="text-xs font-semibold text-foreground">Optimal Air Flow & Sunlight</p>
+                            <p className="text-xs font-semibold text-foreground">{language === "hi" ? "पर्याप्त हवा और धूप" : "Optimal Air Flow & Sunlight"}</p>
                             <p className="text-[11px] text-muted-foreground leading-relaxed">
-                              Space crops properly to ensure 6–8 hours of sunlight and reduce canopy humidity.
+                              {language === "hi" ? "पौधों में उचित दूरी रखें ताकि 6-8 घंटे धूप मिले और नमी कम हो।" : "Space crops properly to ensure 6–8 hours of sunlight and reduce canopy humidity."}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2.5 rounded-lg bg-muted/40 p-2.5 transition-colors hover:bg-muted/60">
                           <IconBug className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
                           <div>
-                            <p className="text-xs font-semibold text-foreground">Weekly Leaf Inspections</p>
+                            <p className="text-xs font-semibold text-foreground">{language === "hi" ? "साप्ताहिक पत्ती निरीक्षण" : "Weekly Leaf Inspections"}</p>
                             <p className="text-[11px] text-muted-foreground leading-relaxed">
-                              Inspect lower leaves weekly to catch early-stage spots before they infect the field.
+                              {language === "hi" ? "बीमारी फैलने से पहले निचली पत्तियों का हर हफ्ते निरीक्षण करें।" : "Inspect lower leaves weekly to catch early-stage spots before they infect the field."}
                             </p>
                           </div>
                         </div>
                         <div className="flex items-start gap-2.5 rounded-lg bg-muted/40 p-2.5 transition-colors hover:bg-muted/60">
                           <IconLeaf className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
                           <div>
-                            <p className="text-xs font-semibold text-foreground">Seasonal Crop Rotation</p>
+                            <p className="text-xs font-semibold text-foreground">{language === "hi" ? "मौसमी फसल चक्र" : "Seasonal Crop Rotation"}</p>
                             <p className="text-[11px] text-muted-foreground leading-relaxed">
-                              Rotate nightshade crops (potato, tomato, pepper) every 2–3 years to break pathogen cycles.
+                              {language === "hi" ? "रोग चक्र तोड़ने के लिए हर 2-3 साल में फसलें बदलें।" : "Rotate nightshade crops (potato, tomato, pepper) every 2–3 years to break pathogen cycles."}
                             </p>
                           </div>
                         </div>
@@ -975,7 +1128,7 @@ export default function Home() {
               <div className="space-y-10">
                 {/* Header with language toggle */}
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold">Diagnosis Results</h3>
+                  <h3 className="text-lg font-bold">{language === "hi" ? "निदान परिणाम" : "Diagnosis Results"}</h3>
                   <Tooltip>
                     <TooltipTrigger
                       render={
@@ -994,7 +1147,7 @@ export default function Home() {
                       {language === "en" ? "हिंदी" : "English"}
                     </TooltipTrigger>
                     <TooltipContent>
-                      Switch remedy language
+                      {language === "hi" ? "भाषा बदलें" : "Switch remedy language"}
                     </TooltipContent>
                   </Tooltip>
                 </div>
@@ -1007,8 +1160,7 @@ export default function Home() {
                         <IconLeaf className="h-12 w-12 text-primary/30" />
                       </div>
                       <p className="mt-3 text-sm text-muted-foreground">
-                        Upload a leaf image or start the camera to
-                        begin analysis
+                        {language === "hi" ? "विश्लेषण शुरू करने के लिए पत्ती का चित्र अपलोड करें या कैमरा चालू करें" : "Upload a leaf image or start the camera to begin analysis"}
                       </p>
                     </CardContent>
                   </Card>
@@ -1067,7 +1219,7 @@ export default function Home() {
                                     {index + 1}
                                   </span>
                                   <CardTitle className="text-base">
-                                    {pred.displayName}
+                                    {language === "hi" && pred.info.displayNameHi ? pred.info.displayNameHi : pred.displayName}
                                   </CardTitle>
                                 </div>
                                 <Badge
@@ -1077,12 +1229,12 @@ export default function Home() {
                                   )}
                                 >
                                   {pred.info.severity === "none"
-                                    ? "Healthy"
+                                    ? (language === "hi" ? "स्वस्थ" : "Healthy")
                                     : pred.info.severity.toUpperCase()}
                                 </Badge>
                               </div>
                               <CardDescription className="mt-1 text-xs">
-                                {pred.info.description}
+                                {language === "hi" && pred.info.descriptionHi ? pred.info.descriptionHi : pred.info.description}
                               </CardDescription>
                             </CardHeader>
                             <CardContent className="pb-3">
@@ -1090,7 +1242,7 @@ export default function Home() {
                                 value={pred.confidence * 100}
                               >
                                 <ProgressLabel className="text-xs">
-                                  Confidence
+                                  {language === "hi" ? "सटीकता" : "Confidence"}
                                 </ProgressLabel>
                                 <ProgressValue />
                               </Progress>
@@ -1102,7 +1254,7 @@ export default function Home() {
                                 <Accordion>
                                   <AccordionItem value="remedy">
                                     <AccordionTrigger className="text-sm font-semibold text-primary">
-                                      💊 Remedy Tips (
+                                      {language === "hi" ? "💊 उपचार के उपाय" : "💊 Remedy Tips"} (
                                       {language === "en"
                                         ? "English"
                                         : "हिंदी"}
@@ -1144,10 +1296,9 @@ export default function Home() {
                 {modelStatus === "error" && (
                   <Alert variant="destructive">
                     <IconAlertTriangle className="h-4 w-4" />
-                    <AlertTitle>Model Error</AlertTitle>
+                    <AlertTitle>{language === "hi" ? "मॉडल त्रुटि" : "Model Error"}</AlertTitle>
                     <AlertDescription>
-                      The model could not be loaded. Please check your
-                      connection and refresh the page.
+                      {language === "hi" ? "मॉडल लोड नहीं हो सका। कृपया कनेक्शन जांचें और पेज रीफ्रेश करें।" : "The model could not be loaded. Please check your connection and refresh the page."}
                     </AlertDescription>
                   </Alert>
                 )}
@@ -1158,14 +1309,14 @@ export default function Home() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <IconPhoto className="h-4 w-4 text-purple-500" />
-                        <h4 className="text-sm font-semibold">Sample Test Images</h4>
+                        <h4 className="text-sm font-semibold">{language === "hi" ? "नमूना परीक्षण चित्र" : "Sample Test Images"}</h4>
                       </div>
                       <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-500 bg-purple-500/10">
-                        Hackathon Demo
+                        {language === "hi" ? "हैकाथॉन डेमो" : "Hackathon Demo"}
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Don&apos;t have a leaf image? Click any sample to test immediately or download to your device:
+                      {language === "hi" ? "पत्ती का चित्र नहीं है? किसी नमूने पर क्लिक करके तुरंत परीक्षण करें:" : "Don't have a leaf image? Click any sample to test immediately or download to your device:"}
                     </p>
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-2">
                       {SAMPLE_IMAGES[cropType]?.slice(0, 2).map((sample, idx) => (
@@ -1181,7 +1332,7 @@ export default function Home() {
                             />
                           </div>
                           <p className="truncate text-xs font-semibold text-foreground mb-2">
-                            {sample.label}
+                            {language === "hi" ? sample.labelHi : sample.label}
                           </p>
                           <div className="flex items-center gap-1">
 
@@ -1210,6 +1361,7 @@ export default function Home() {
                 prediction={predictions[0].displayName}
                 cropType={cropType}
                 confidence={predictions[0].confidence}
+                language={language}
               />
             )}
 
@@ -1224,10 +1376,10 @@ export default function Home() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold sm:text-2xl">
-                  Scan History
+                  {language === "hi" ? "स्कैन इतिहास" : "Scan History"}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Your past leaf analyses
+                  {language === "hi" ? "आपके पिछले पत्ती विश्लेषण" : "Your past leaf analyses"}
                 </p>
               </div>
               {history.length > 0 && (
@@ -1236,7 +1388,7 @@ export default function Home() {
                   size="sm"
                   onClick={clearHistory}
                 >
-                  Clear All
+                  {language === "hi" ? "सब हटाएं" : "Clear All"}
                 </Button>
               )}
             </div>
@@ -1248,7 +1400,7 @@ export default function Home() {
                 <CardContent className="flex flex-col items-center justify-center py-12 text-center">
                   <IconHistory className="h-10 w-10 text-muted-foreground/40" />
                   <p className="mt-3 text-sm text-muted-foreground">
-                    No scans yet. Upload a leaf image to get started!
+                    {language === "hi" ? "अभी तक कोई स्कैन नहीं। शुरू करने के लिए पत्ती का चित्र अपलोड करें!" : "No scans yet. Upload a leaf image to get started!"}
                   </p>
                 </CardContent>
               </Card>
@@ -1277,19 +1429,14 @@ export default function Home() {
                                 className="absolute top-2 right-2 text-[10px]"
                                 variant="secondary"
                               >
-                                {entry.cropType === "potato"
-                                  ? "🥔"
-                                  : entry.cropType === "tomato"
-                                    ? "🍅"
-                                    : "🫑"}
+                                {CROP_EMOJI[entry.cropType as CropType] || "🌿"}
                               </Badge>
                             </div>
                             <CardContent className="p-3">
                               <p className="truncate text-xs font-semibold">
-                                {
-                                  entry.predictions[0]
-                                    ?.displayName
-                                }
+                                {language === "hi" && entry.predictions[0]?.info?.displayNameHi
+                                  ? entry.predictions[0].info.displayNameHi
+                                  : entry.predictions[0]?.displayName}
                               </p>
                               <p className="text-[10px] text-muted-foreground">
                                 {(
@@ -1308,20 +1455,18 @@ export default function Home() {
                       <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                           <DialogTitle>
-                            {entry.predictions[0]?.displayName}
+                            {language === "hi" && entry.predictions[0]?.info?.displayNameHi
+                              ? entry.predictions[0].info.displayNameHi
+                              : entry.predictions[0]?.displayName}
                           </DialogTitle>
                           <DialogDescription>
-                            Scanned on{" "}
+                            {language === "hi" ? "स्कैन तिथि:" : "Scanned on"}{" "}
                             {new Date(
                               entry.timestamp
                             ).toLocaleString()}{" "}
                             •{" "}
-                            {entry.cropType === "potato"
-                              ? "Potato"
-                              : entry.cropType === "tomato"
-                                ? "Tomato"
-                                : "Pepper Bell"}{" "}
-                            model
+                            {language === "hi" ? CROP_NAME_HINDI[entry.cropType as CropType] : CROP_NAME_ENGLISH[entry.cropType as CropType]}{" "}
+                            {language === "hi" ? "मॉडल" : "model"}
                           </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-3">
@@ -1340,7 +1485,7 @@ export default function Home() {
                                   #{i + 1}
                                 </span>
                                 <span className="font-medium">
-                                  {pred.displayName}
+                                  {language === "hi" && pred.info.displayNameHi ? pred.info.displayNameHi : pred.displayName}
                                 </span>
                               </span>
                               <Badge

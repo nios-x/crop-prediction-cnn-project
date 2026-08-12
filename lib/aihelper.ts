@@ -1,12 +1,18 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
-});
+let _openai: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+    if (!_openai) {
+        _openai = new OpenAI({
+            apiKey: process.env.GEMINI_API_KEY || "dummy-key",
+            baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
+        });
+    }
+    return _openai;
+}
 
 export async function askAI(question: string) {
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAI().chat.completions.create({
         model: "gemini-3.5-flash",
         messages: [
             {

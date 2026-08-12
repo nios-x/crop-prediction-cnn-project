@@ -53,6 +53,7 @@ interface AIReviewPanelProps {
   prediction: string;
   cropType: string;
   confidence: number;
+  language?: "en" | "hi";
 }
 
 // ── Helpers ─────────────────────────────────────────────────────
@@ -105,10 +106,13 @@ export function AIReviewPanel({
   prediction,
   cropType,
   confidence,
+  language = "en",
 }: AIReviewPanelProps) {
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState<AIRecommendations | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const t = (en: string, hi: string) => language === "hi" ? hi : en;
 
   async function fetchReview() {
     setLoading(true);
@@ -380,7 +384,7 @@ export function AIReviewPanel({
         <ReviewCard
           key="severity"
           icon={<IconAlertTriangle className="h-4 w-4 text-red-500" />}
-          title="Severity Assessment"
+          title={t("Severity Assessment", "गंभीरता मूल्यांकन")}
           colorClass={severityCard(r.severity.level)}
           index={idx++}
         >
@@ -400,7 +404,7 @@ export function AIReviewPanel({
         <ReviewCard
           key="confidence"
           icon={<IconTargetArrow className="h-4 w-4 text-blue-500" />}
-          title="Confidence Analysis"
+          title={t("Confidence Analysis", "सटीकता विश्लेषण")}
           colorClass="from-blue-500/10 to-blue-500/5"
           index={idx++}
         >
@@ -417,12 +421,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="fungicide"
           icon={<IconFlask className="h-4 w-4 text-purple-500" />}
-          title="Fungicide Treatment"
+          title={t("Fungicide Treatment", "फफूंदनाशक उपचार")}
           colorClass="from-purple-500/10 to-purple-500/5"
           index={idx++}
         >
           <span className={`text-[12px] font-medium ${r.fungicide.recommended ? "text-red-500" : "text-green-500"}`}>
-            {r.fungicide.recommended ? "⚠ Treatment needed" : "✓ Not required"}
+            {r.fungicide.recommended ? t("⚠ Treatment needed", "⚠ उपचार आवश्यक") : t("✓ Not required", "✓ आवश्यक नहीं")}
           </span>
           {r.fungicide.products?.length > 0 && (
             <div className="mt-1.5 flex flex-wrap gap-1">
@@ -443,7 +447,7 @@ export function AIReviewPanel({
         <ReviewCard
           key="watering"
           icon={<IconDroplet className="h-4 w-4 text-cyan-500" />}
-          title="Watering Advice"
+          title={t("Watering Advice", "सिंचाई सलाह")}
           colorClass="from-cyan-500/10 to-cyan-500/5"
           index={idx++}
         >
@@ -457,12 +461,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="weather"
           icon={<IconCloud className="h-4 w-4 text-sky-500" />}
-          title="Weather Risk"
+          title={t("Weather Risk", "मौसम जोखिम")}
           colorClass="from-sky-500/10 to-sky-500/5"
           index={idx++}
         >
           <Badge variant="outline" className={`mb-1.5 text-[11px] ${riskBadge(r.weather.risk)}`}>
-            Risk: {r.weather.risk?.toUpperCase()}
+            {t("Risk:", "जोखिम:")} {r.weather.risk?.toUpperCase()}
           </Badge>
           <p>{r.weather.reason}</p>
         </ReviewCard>
@@ -474,12 +478,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="yield"
           icon={<IconChartBar className="h-4 w-4 text-rose-500" />}
-          title="Yield Impact"
+          title={t("Yield Impact", "उपज प्रभाव")}
           colorClass="from-rose-500/10 to-rose-500/5"
           index={idx++}
         >
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[12px] font-medium text-foreground">Est. Loss:</span>
+            <span className="text-[12px] font-medium text-foreground">{t("Est. Loss:", "अनुमानित हानि:")}</span>
             <Badge variant="outline" className="border-rose-500/30 bg-rose-500/10 text-[11px] font-bold text-rose-600">
               {r.yield.estimated_loss}
             </Badge>
@@ -494,17 +498,17 @@ export function AIReviewPanel({
         <ReviewCard
           key="monitoring"
           icon={<IconCalendar className="h-4 w-4 text-indigo-500" />}
-          title="Monitoring Schedule"
+          title={t("Monitoring Schedule", "निगरानी कार्यक्रम")}
           colorClass="from-indigo-500/10 to-indigo-500/5"
           index={idx++}
         >
           <div className="space-y-1 text-[12px]">
             <div className="flex justify-between">
-              <span className="font-medium text-foreground">Next scan</span>
+              <span className="font-medium text-foreground">{t("Next scan", "अगला स्कैन")}</span>
               <Badge variant="outline" className="border-indigo-500/30 bg-indigo-500/10 text-[10px] text-indigo-600">{r.monitoring.next_scan}</Badge>
             </div>
             <div className="flex justify-between">
-              <span className="font-medium text-foreground">Frequency</span>
+              <span className="font-medium text-foreground">{t("Frequency", "बारंबारता")}</span>
               <span>{r.monitoring.frequency}</span>
             </div>
           </div>
@@ -517,7 +521,7 @@ export function AIReviewPanel({
         <ReviewCard
           key="fertilizer"
           icon={<IconSeeding className="h-4 w-4 text-lime-500" />}
-          title="Fertilizer Guidance"
+          title={t("Fertilizer Guidance", "उर्वरक मार्गदर्शन")}
           colorClass="from-lime-500/10 to-lime-500/5"
           index={idx++}
         >
@@ -531,12 +535,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="isolation"
           icon={<IconPlant className="h-4 w-4 text-amber-500" />}
-          title="Plant Isolation"
+          title={t("Plant Isolation", "पौधा पृथक्करण")}
           colorClass="from-amber-500/10 to-amber-500/5"
           index={idx++}
         >
           <span className={`text-[12px] font-medium ${r.isolation.recommended ? "text-amber-600" : "text-green-500"}`}>
-            {r.isolation.recommended ? "⚠ Isolate plants" : "✓ No isolation needed"}
+            {r.isolation.recommended ? t("⚠ Isolate plants", "⚠ पौधे अलग करें") : t("✓ No isolation needed", "✓ पृथक्करण की आवश्यकता नहीं")}
           </span>
           <p className="mt-1">{r.isolation.message}</p>
         </ReviewCard>
@@ -548,12 +552,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="expert"
           icon={<IconStethoscope className="h-4 w-4 text-pink-500" />}
-          title="Expert Advice"
+          title={t("Expert Advice", "विशेषज्ञ सलाह")}
           colorClass="from-pink-500/10 to-pink-500/5"
           index={idx++}
         >
           <span className={`text-[12px] font-medium ${r.expert.consult ? "text-red-500" : "text-green-500"}`}>
-            {r.expert.consult ? "⚠ Consult an expert" : "✓ Manageable"}
+            {r.expert.consult ? t("⚠ Consult an expert", "⚠ विशेषज्ञ से सलाह लें") : t("✓ Manageable", "✓ प्रबंधनीय")}
           </span>
           <p className="mt-1">{r.expert.reason}</p>
         </ReviewCard>
@@ -565,12 +569,12 @@ export function AIReviewPanel({
         <ReviewCard
           key="image_quality"
           icon={<IconPhoto className="h-4 w-4 text-teal-500" />}
-          title="Image Quality"
+          title={t("Image Quality", "चित्र गुणवत्ता")}
           colorClass="from-teal-500/10 to-teal-500/5"
           index={idx++}
         >
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[12px] font-medium text-foreground">Score</span>
+            <span className="text-[12px] font-medium text-foreground">{t("Score", "अंक")}</span>
             <span className={`text-base font-bold ${r.image_quality.score >= 80 ? "text-emerald-500" : r.image_quality.score >= 50 ? "text-yellow-500" : "text-red-500"}`}>
               {r.image_quality.score}/100
             </span>
@@ -585,7 +589,7 @@ export function AIReviewPanel({
         <ReviewCard
           key="prevention"
           icon={<IconChecklist className="h-4 w-4 text-emerald-500" />}
-          title="Prevention Steps"
+          title={t("Prevention Steps", "रोकथाम के उपाय")}
           colorClass="from-emerald-500/10 to-emerald-500/5"
           index={idx++}
         >
@@ -615,10 +619,10 @@ export function AIReviewPanel({
             </div>
             <div>
               <h4 className="text-sm font-bold tracking-tight text-foreground">
-                AI-Assisted Review
+                {t("AI-Assisted Review", "AI-सहायित समीक्षा")}
               </h4>
               <p className="text-xs text-muted-foreground">
-                Comprehensive expert crop diagnostics
+                {t("Comprehensive expert crop diagnostics", "विशेषज्ञ फसल निदान")}
               </p>
             </div>
           </div>
@@ -630,7 +634,7 @@ export function AIReviewPanel({
                 className="h-8 gap-1.5 rounded-lg px-3 text-xs font-medium text-muted-foreground hover:text-foreground border-purple-500/20 hover:bg-purple-500/10 hover:border-purple-500/40 transition-all"
                 onClick={fetchReview}
               >
-                ↻ Refresh
+                {t("↻ Refresh", "↻ रिफ्रेश")}
               </Button>
               <Button
                 variant="outline"
@@ -639,7 +643,7 @@ export function AIReviewPanel({
                 onClick={() => downloadReport("txt")}
               >
                 <IconDownload className="h-3.5 w-3.5" />
-                Save .TXT
+                {t("Save .TXT", "TXT सेव करें")}
               </Button>
               <Button
                 variant="outline"
@@ -648,7 +652,7 @@ export function AIReviewPanel({
                 onClick={() => downloadReport("pdf")}
               >
                 <IconDownload className="h-3.5 w-3.5" />
-                Save PDF
+                {t("Save PDF", "PDF सेव करें")}
               </Button>
             </div>
           )}
@@ -658,7 +662,7 @@ export function AIReviewPanel({
         {!review && !loading && (
           <div className="space-y-3 pt-1">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Click below to generate detailed insights on fungicide treatments, watering rules, weather risk, and yield loss projections.
+              {t("Click below to generate detailed insights on fungicide treatments, watering rules, weather risk, and yield loss projections.", "फफूंदनाशक उपचार, सिंचाई नियम, मौसम जोखिम और उपज हानि अनुमान पर विस्तृत जानकारी के लिए नीचे क्लिक करें।")}
             </p>
             <Button
               onClick={fetchReview}
@@ -668,7 +672,7 @@ export function AIReviewPanel({
               <span className="ai-review-shimmer absolute inset-0" />
               <span className="relative flex items-center justify-center gap-2">
                 <IconSparkles className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-125" />
-                Get AI-Assisted Review
+                {t("Get AI-Assisted Review", "AI-सहायित समीक्षा प्राप्त करें")}
               </span>
             </Button>
           </div>
@@ -685,7 +689,7 @@ export function AIReviewPanel({
             >
               <div className="flex items-center gap-2.5 rounded-lg border border-purple-500/20 bg-purple-500/10 px-3 py-2.5 text-sm text-purple-600 dark:text-purple-300">
                 <IconLoader2 className="h-4 w-4 animate-spin shrink-0" />
-                <span>Analyzing crop with Gemini AI model…</span>
+                <span>{t("Analyzing crop with Gemini AI model…", "Gemini AI मॉडल से फसल का विश्लेषण हो रहा है…")}</span>
               </div>
               <ReviewSkeleton />
             </motion.div>
@@ -711,7 +715,7 @@ export function AIReviewPanel({
                 className="mt-2.5 h-8 text-xs border-red-500/30 text-red-600 hover:bg-red-500/10"
                 onClick={fetchReview}
               >
-                Try Again
+                {t("Try Again", "पुनः प्रयास करें")}
               </Button>
             </motion.div>
           )}
